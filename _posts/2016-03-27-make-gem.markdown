@@ -1,0 +1,89 @@
+---
+layout: post
+title: "制作并发布 ruby gem"
+date: 2016-03-27 17:49:55 +0200
+categories: jekyll update
+---
+
+写一个demo工具来记录gem的开发过程
+工具的作用：遍历本地的git仓库，并且更新它们到最新的代码，也就是每个仓库进行git pull操作
+
+功能很简单，关键是流程，mac下的gem开发环境：
+
+ruby –version, 2.2.2
+
+gem –version, 2.6.1
+
+bundle –version, 1.11.2
+
+rake –version, 10.4.2
+
+{% highlight shell %}
+bundle gem update_gitrepos
+{% endhighlight %}
+
+![make-gem-0]({{ "/assets/make-gem-0.png" | absolute_url }})
+
+bundle会自动生成这个约定的目录，然后我们看下自动生成的文件结构，
+{% highlight shell %}
+cd update_gitrepos
+tree ./
+{% endhighlight %}
+
+![make-gem-1]({{ "/assets/make-gem-1.png" | absolute_url }})
+
+打开IDE
+{% highlight shell %}
+subl ./
+{% endhighlight %}
+先看lib下的update_gitrepos.rb，module UpdateGitrepos 是入口
+
+梳理下，要做几件事情：
+1. 知道要更新的总目录的path，这个会作为输入，所有的git仓库在总目录下
+2. 依据总目录分离出每个git仓库的路径，并把它们加到array中
+3. 遍历这个array，对每一个git仓库进行git pull操作，输出git的执行结果，并更新整个执行进度
+已经完成的代码链接：[update_gitrepos](https://github.com/HongliYu/update_gitrepos)
+
+工程目录下，验证功能，进入命令行交互界面
+{% highlight shell %}
+bundle console
+{% endhighlight %}
+然后运行
+{% highlight shell %}
+UpdateGitrepos.run("$path")
+{% endhighlight %}
+$path是指存放git仓库的总目录路径
+
+如果一切顺利，那么更新Gem说明文档，消灭README.md和.gemspec文件中所有的TODO。然后在github上创建远程仓库，并把代码提交到上去。
+很好，现在我们要打包成gem，并发布到rubygems.org让所有人都用我们的工具一次更新目录下所有的git仓库
+运行rake -T看下，命令的基本用法
+
+![make-gem-2]({{ "/assets/make-gem-2.png" | absolute_url }})
+
+cd到工程目录下，运行rake build
+
+![make-gem-3]({{ "/assets/make-gem-3.png" | absolute_url }})
+
+在本地创建了gem，现在把gem安装到本机
+
+![make-gem-4]({{ "/assets/make-gem-4.png" | absolute_url }})
+
+检查是否可用
+
+![make-gem-5]({{ "/assets/make-gem-5.png" | absolute_url }})
+
+很好，一切就绪，就差发布到平台了，我们没有upstream，不是fork开发，所以运行
+
+{% highlight shell %}
+git push --set-upstream origin master
+{% endhighlight %}
+
+然后 rake release，发布了？不，还差一点点，按照提示来吧，不要忘记社区的帐号和密码
+
+![make-gem-6]({{ "/assets/make-gem-6.png" | absolute_url }})
+
+现在运行rake release
+
+![make-gem-7]({{ "/assets/make-gem-7.png" | absolute_url }})
+
+最后，发布到社区了，进入rubygems.org，赶快搜下刚写的gem吧

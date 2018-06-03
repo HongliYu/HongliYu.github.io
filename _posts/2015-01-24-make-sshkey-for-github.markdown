@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "在Mac上为GitHub创建SSH Key"
-date:   2015-01-24 17:49:55 +0200
+title: "在 Mac 上为 GitHub 创建 SSH Key"
+date: 2015-01-24 17:49:55 +0200
 categories: jekyll update
 ---
 

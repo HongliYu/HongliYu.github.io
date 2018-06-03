@@ -1,7 +1,6 @@
 ---
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: home
 ---
-This is the home page
+![brain_test]({{ "/assets/brain_test.gif" | absolute_url }})
