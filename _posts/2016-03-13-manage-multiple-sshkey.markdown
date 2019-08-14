@@ -44,7 +44,7 @@ Host icode.baidu.com
 然后保存退出，以这个格式为模版可以添加更多。测试是否配置成功
 {% highlight shell %}
 ssh -T git@github.com
-ssh -T ssh yuhongli@icode.baidu.com -p 端口号
+ssh -T git@icode.baidu.com -p 32123
 {% endhighlight %}
 
 
